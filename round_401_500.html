@@ -1,0 +1,320 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>
+   Sport Technology related resources
+  </title>
+<head>
+<style type="text/css">
+table {
+  width: 100%;
+}
+  table,
+    td {
+    border: 0px solid #333;
+    }
+
+    thead,
+    tfoot {
+    background-color: #333;
+    color: #fff;
+    }  
+  .button {
+  background-color: #e7e7e7; 
+  color: white;
+  border: none;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 26px;
+  width: 100%;
+  border-radius: 12px;
+
+}
+
+#BtnA {
+    background-color: #0B0B0C; 
+    white-space: normal;
+}
+
+#BtnB {
+    background-color: #0B0B0C;
+    white-space: normal;
+}
+
+
+.buttonSubmit{
+  background-color: #0B0B0C ; /* grey*/
+}
+
+.arrows{
+  background-color: #0B0B0C ; /* black */
+  color: white;
+}
+
+.button:active {
+           
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            /* Lowering the shadow */
+        }
+
+ body {
+            text-align: center;
+        }
+
+textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    width: 100%;
+
+    font-size: 20px; 
+    border-radius: 12px;
+}
+
+</style> 
+
+<body>
+
+
+<input type="text" id="userid" minlength=6 maxlength=6 size=6 required placeholder="User ID"> <br>
+
+
+<h1>Which to keep?</h1>
+<br>
+<input id="loadBtn" type="button" class="button arrows" value="Refresh" onclick="loadClicked()" />
+
+<table style="width:100%">
+
+    <tbody>
+        <tr>
+            <td width="50%"  style="text-align:center">
+            <input id="BtnA" style="height:400px" type="button" class="button buttonSubmit" value="" onclick="updateL()" />
+            </td>
+
+            <td width="50%"  style="text-align:center">
+            <input id="BtnB" style="height:400px" type="button" class="button buttonSubmit" value="" onclick="updateR()" />
+            </td>
+
+        </tr>
+        <tr>
+            <td width="50%"  style="text-align:center"><p><strong></strong></p>
+            
+            <p><strong></strong></p>  
+            <p id ="url1"></p>
+            </td>
+            
+            <td width="50%"  style="text-align:center"><p><strong></strong>
+            <p><strong></strong></p>  
+            <p id ="url2"></p>
+            </td>
+        </tr>
+
+        
+
+        
+
+    </tbody>
+
+</table>
+<div>
+<textarea id="textmessage" rows="4" placeholder="Write some notes pertaining to this before making your decision, if you wish..."></textarea>
+</div>
+
+</body>
+
+<script type="text/javascript">    
+document.documentElement.requestFullscreen();
+//var comments = document.getElementById("fb").value; 
+
+var id = 1;
+var data = "";
+var url1 = "";
+var text1 = "";
+var url2 = "";
+var text2 = "";
+
+
+var userid = "";
+
+var textcomments =""
+
+document.getElementById('userid').style.height="70px";
+document.getElementById('userid').style.fontSize="24pt";
+
+
+function display(id) {
+var userid = document.getElementById("userid").value;
+
+            //  document.getElementById("BtnA").innerHTML = "";
+            //  document.getElementById("BtnB").innerHTML = "";
+            BtnA.style.backgroundColor = 'black';
+            BtnB.style.backgroundColor = 'black';
+            BtnA.style.color = 'black';
+            BtnB.style.color = 'black';
+        var id2 = Math.floor(Math.random() * 100) ;
+
+        var url = "https://api.airtable.com/v0/appFXrbYN7Ww3gkO6/Table2/?maxRecords=100&view=Grid%20view";
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url);
+        xhr.setRequestHeader("Authorization", "Bearer key7LOdJXzCbfnKMr");
+        xhr.onreadystatechange = function () {
+           if (xhr.readyState === 4) {
+              console.log(xhr.status);
+              console.log(xhr.responseText);
+              data = JSON.parse(xhr.responseText);
+              data = data.records;
+              url1 = data[id].fields.url;
+              text1 = data[id].fields.text;
+              url2 = data[id2].fields.url;
+              text2 = data[id2].fields.text;
+
+              document.getElementById("url1").innerHTML = '<a href="' +url1 + '" target="_blank">Link</a>';
+              document.getElementById("url2").innerHTML =  '<a href="' +url2 + '" target="_blank">Link</a>';
+            
+              
+              document.getElementById("BtnA").value = text1 ;
+              document.getElementById("BtnB").value = text2  ;
+
+            BtnA.style.backgroundColor = 'green';
+            BtnB.style.backgroundColor = 'purple';
+            BtnA.style.color = 'white';
+            BtnB.style.color = 'white';
+              }};
+xhr.send();
+}
+
+function loadClicked(){
+
+    id = Math.floor(Math.random() * 100) 
+    display(id);
+    //document.getElementById("loadBtn").style.display = "none";
+
+ }
+
+
+
+function updateR(){
+    
+    textcomments= document.getElementById("textmessage").value ;
+    console.log("tis for textcomments"+textcomments);
+    loadClicked();
+    
+
+var url = "https://api.airtable.com/v0/appFXrbYN7Ww3gkO6/Table3";
+
+var xhr = new XMLHttpRequest();
+xhr.open("POST", url);
+
+xhr.setRequestHeader("Authorization", "Bearer key7LOdJXzCbfnKMr");
+xhr.setRequestHeader("Content-Type", "application/json");
+
+xhr.onreadystatechange = function () {
+   if (xhr.readyState === 4) {
+      console.log(xhr.status);
+      console.log(xhr.responseText);
+   }};
+
+
+p1 =   `{
+    "fields": {
+      "leftText":"` 
+
+//p2 = `"text1"`
+
+p2 = text1
+
+p3 =`","rightText":"` 
+
+//p4 = `"text2"`
+p4 = text2;
+
+p5 = `","userid":"` 
+
+p6 = document.getElementById("userid").value;
+
+p7 = `","comments":"` 
+
+p8 = document.getElementById("textmessage").value; 
+
+
+p9 = `","choice":"Right"}}`
+
+
+var data22 = p1+p2+p3+p4+p5+p6+p7+p8+p9; 
+
+console.log(data22);
+    
+document.getElementById("textmessage").value = "";
+
+xhr.send(data22);
+
+
+
+
+ }
+
+function updateL(){
+    
+    textcomments= document.getElementById("textmessage").value ;
+    console.log("tis for textcomments"+textcomments);
+    loadClicked();
+    
+
+var url = "https://api.airtable.com/v0/appFXrbYN7Ww3gkO6/Table3";
+
+var xhr = new XMLHttpRequest();
+xhr.open("POST", url);
+
+xhr.setRequestHeader("Authorization", "Bearer key7LOdJXzCbfnKMr");
+xhr.setRequestHeader("Content-Type", "application/json");
+
+xhr.onreadystatechange = function () {
+   if (xhr.readyState === 4) {
+      console.log(xhr.status);
+      console.log(xhr.responseText);
+   }};
+
+
+p1 =   `{
+    "fields": {
+      "leftText":"` 
+
+//p2 = `"text1"`
+
+p2 = text1
+
+p3 =`","rightText":"` 
+
+//p4 = `"text2"`
+p4 = text2;
+
+p5 = `","userid":"` 
+
+p6 = document.getElementById("userid").value;
+
+p7 = `","comments":"` 
+
+p8 = document.getElementById("textmessage").value; 
+
+
+p9 = `","choice":"Left"}}`
+
+
+var data22 = p1+p2+p3+p4+p5+p6+p7+p8+p9; 
+
+console.log(data22);
+    
+document.getElementById("textmessage").value = "";
+
+xhr.send(data22);
+
+
+
+
+ }
+
+</script>
+</html>
