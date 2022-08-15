@@ -1,0 +1,39 @@
+"title","text","modified","created","side-bar","tags","type"
+"Contents","<div class=""tc-table-of-contents"">
+<<toc-selective-expandable 'Contents' sort[title]>> 
+</div>","21100812120000000","21100812120000000","","$:/tags/SideBar",""
+"sub-topicA","text","20800812120000000","21100812120000000","","Topic1",""
+"TableOfContents","","21100812120000000","21100812120000000","tabs","",""
+"Toggle Sidebar Tabs","\define getSideTabs()
+<$button tooltip=""List SideBar Tabs"">
+<$action-setfield $tiddler=""$:/core/ui/SideBar/More"" $field=""side-bar"" $value=""tabs""/>
+<$action-setfield $tiddler=""$:/core/ui/SideBar/Tools"" $field=""side-bar"" $value=""tabs""/>
+<$action-setfield $tiddler=""$:/core/ui/SideBar/Recent"" $field=""side-bar"" $value=""tabs""/>
+<$action-setfield $tiddler=""$:/core/ui/SideBar/Open"" $field=""side-bar"" $value=""tabs""/>
+<$action-setfield $tiddler=""TableOfContents"" $field=""side-bar"" $value=""tabs""/>
+<$action-setfield $tiddler=""$:/AdvancedSearch"" $field=""side-bar"" $value=""tabs""/>
+<$action-setfield $tiddler=""$:/AdvancedSearch"" $field=""caption"" $value=""Search""/>
+<$action-setfield $tiddler=""$:/_SideBar/Wiki"" $field=""side-bar"" $value=""tabs""/>
+<$action-setfield $tiddler=""$:/_SideBar/Wiki"" $field=""caption"" $value=""Wiki""/>
+<$action-setfield $tiddler=""$:/_SideBar/Wiki"" $field=""text"" $value=""""""
+<div class=""tc-more-sidebar"">
+<<tabs ""[all[shadows+tiddlers]tag[$:/tags/WikiSideBar]!has[draft.of]]"" ""$:/core/ui/SideBar/More"" ""$:/state/tab/wikisidebar"" ""tc-vertical"">>
+</div>
+""""""/>
+{{$:/core/images/new-button}}
+</$button>
+\end
+
+<table>
+<tr><th>Toggle Sidebar Tabs</th><th><<getSideTabs>></th></tr>
+<$list filter=""[field:side-bar[tabs]!has[draft.of]]"">
+<tr><td><$view tiddler={{!!title}} field=""title""/></td><td><span title=""Toggle Tab""><$checkbox tiddler={{!!title}} tag=""$:/tags/SideBar""/></span></td></tr>
+</$list>
+<tr><th>Toggle ~WikiSidebar Tabs</th><th></th></tr>
+<$list filter=""[field:side-bar[tabs]!has[draft.of]![$:/_SideBar/Wiki]]"">
+<tr><td><$view tiddler={{!!title}} field=""title""/></td><td><span title=""Toggle Tab""><$checkbox tiddler={{!!title}} tag=""$:/tags/WikiSideBar""/></span></td></tr>
+</$list>
+</table>","21100812120000000","20200612120000000","","","application/x-tiddler"
+"Topic1","text","21100812120000000","21100812120000000","","Contents",""
+"Topic2","text","21100812120000000","21100812120000000","","Contents",""
+"Topic3","text","21100812120000000","21100812120000000","","Contents",""
